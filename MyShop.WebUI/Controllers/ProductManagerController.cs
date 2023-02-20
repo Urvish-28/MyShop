@@ -11,13 +11,13 @@ namespace MyShop.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRespository productCategories;
+        InMemoryRepository<Product> context;
+        InMemoryRepository<ProductCategory> productCategories;
 
         public ProductManagerController()
         {
-            context = new ProductRepository();
-            productCategories = new ProductCategoryRespository();
+            context = new InMemoryRepository<Product>();
+            productCategories = new InMemoryRepository<ProductCategory>();
         }
         // GET: ProductManager
         public ActionResult Index()
@@ -46,7 +46,7 @@ namespace MyShop.WebUI.Controllers
             else
             {
                 context.Insert(product);
-                context.Commit();
+                context.commit();
 
                 return RedirectToAction("Index");
             }
@@ -91,7 +91,7 @@ namespace MyShop.WebUI.Controllers
                 productToEdit.Name= product.Name;
                 productToEdit.Price= product.Price;
 
-                context.Commit();
+                context.commit();
 
                 return RedirectToAction("Index");
             }
@@ -124,7 +124,7 @@ namespace MyShop.WebUI.Controllers
             else
             {
                 context.Delete(Id);
-                context.Commit();
+                context.commit();
                 return RedirectToAction("Index");
             }
         }
