@@ -1,10 +1,15 @@
 ﻿@model MyShop.Core.Models.ProductCategory
 
 
-@using (Html.BeginForm()) 
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>ProductCategory</h4>
         <hr />
