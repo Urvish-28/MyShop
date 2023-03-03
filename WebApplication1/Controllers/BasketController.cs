@@ -25,6 +25,10 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             var model = basketService.GetBasketItem(this.HttpContext);
+            if (model.Count() == 0)
+            {
+                ModelState.AddModelError("", "Please Add An Item ");
+            }
             return View(model);
         }
 
@@ -67,7 +71,16 @@ namespace WebApplication1.Controllers
                     ZipCode = customer.ZipCode
                 };
 
-                return View(order);
+                if (basketService.GetBasketItem(this.HttpContext).Count == 0)
+                {
+                    return RedirectToAction("Index" , "Home");
+                }
+                else
+                {
+                    return View(order);
+                }
+
+                
             }
             else
             {
@@ -92,7 +105,7 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("ThankYou", new { OrderId = order.Id });
         }
-
+        
         public ActionResult ThankYou(string OrderId)
         {
             ViewBag.OrderId = OrderId;

@@ -3,23 +3,28 @@
     ViewBag.Title = "Home Page";
 }
 
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
 <h1>Products</h1>
 
 <div class="col-md-2">
     <h4>Filter by Category</h4>
+
     <div class="list-group">
-        @Html.ActionLink("All", "Index", null, new { @class = Request["Category"]==null? "list-group-item active" : "list-group-item" })
+        @Html.ActionLink("All", "Index", null, new { @class = Request["Category"] == null ? "list-group-item active" : "list-group-item" })
         @foreach (var cat in Model.ProductCategories)
-            {
-                @Html.ActionLink(cat.Category, "Index", new { Category = cat.Category }, new { @class = Request["Category"] == cat.Category? "list-group-item active" : "list-group-item" })
-            }
+        {
+            //@Html.DropDownListFor(Model=>Model.ProductCategories, new SelectList(cat.Category) { }, new { htmlAttributes = new { @class = "form-control" } }))
+
+            @Html.ActionLink(cat.Category, "Index", new { Category = cat.Category }, new { @class = Request["Category"] == cat.Category ? "list-group-item active" : "list-group-item" })
+        }
     </div>
 </div>
 <div class="col-md-10">
 
     @foreach (var item in Model.Products)
     {
-        <div class="col-md-4" style="height:450px; padding:10px; margin: 10px; border: solid thin whitesmoke">
+        <div class="col-md-4" style="height:450px; padding:10px; margin: 10px; border: solid thin blue">
             <div class="col-md-12">
                 <img class="img" style="height:250px" src="~/Content/ProductImages/@item.Image" />
             </div>
@@ -33,9 +38,19 @@
                 <h4>@String.Format("{0:c}", item.Price)</h4>
             </div>
             <div class="col-md-12">
-                <a href="@Url.Action("AddToBasket", "Basket", new { Id=item.Id })" class="btn btn-default">Add to Basket</a>
+                <a href="@Url.Action("AddToBasket", "Basket", new { Id=item.Id })" class="btn btn-success">Add to Basket</a>
             </div>
         </div>
     }
 </div>
-    <div class="col-md-12 clearfix" />
+<div class="col-md-12 clearfix" />
+
+<script>
+    $(document).ready(function () {
+       // alert("Ready to use..");
+        $('*').css('background-color','black')
+        $('h4').css('color','red')
+        $('h1').css('color','red')
+        $('.col-md-4').css('border-bottom-color','#FFF')
+    })
+</script>

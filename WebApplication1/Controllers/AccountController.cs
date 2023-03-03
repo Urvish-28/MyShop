@@ -78,6 +78,7 @@ namespace WebApplication1.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Session["Name"] = customerRepository.Collection().Where(b => b.Email == model.Email).Select(x => x.FirstName).FirstOrDefault();
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
